@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import type { FormEvent } from "react";
-import { Form, Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthLayout, Divider, Field, SocialRow } from "~/components/auth/AuthLayout";
 import type { Route } from "./+types/signup";
 
@@ -15,8 +14,31 @@ export default function SignUp() {
   const navigate = useNavigate();
   const reduce = useReducedMotion();
 
-  function onSubmit(formData: FormData) {
-    navigate("/dashboard");
+  async function onSubmit(formData: FormData) {
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.get("username"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+        }),
+      });
+      
+
+      if(!res.ok) {
+        throw new Error(`Req failed ${res.status}`)
+      } 
+
+      const data = await res.json()
+      localStorage.setItem("token", data.token)
+      navigate("/dashboard");
+    } catch (e) {
+      console.log({ message: `This is an error: ${e}` });
+    }
   }
 
   return (

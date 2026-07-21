@@ -2,7 +2,6 @@ import { motion, useReducedMotion } from "motion/react";
 import { Link, useNavigate } from "react-router";
 import { AuthLayout, Divider, Field, SocialRow } from "../components/auth/AuthLayout";
 import type { Route } from "./+types/signin";
-import { useEffect } from "react";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -17,8 +16,15 @@ export default function SignIn() {
 
   const onSubmit = async(formData: FormData) => {
       try {
-         const res = await fetch("/api/pop", {
-           method: "GET",
+         const res = await fetch("/api/auth/login", {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json",
+           },
+            body: JSON.stringify({
+              username: formData.get("username"),
+              password: formData.get("password"),
+            }),
          });
 
          if (!res.ok) {
@@ -27,10 +33,11 @@ export default function SignIn() {
 
          const data = await res.json()
          console.log(data)
+         localStorage.setItem("token", data.token)
+         navigate("/dashboard");
        } catch (e) {
          console.log({ message: `This is an error: ${e}` });
        }
-    navigate("/dashboard");
   }
 
   return (
@@ -53,11 +60,11 @@ export default function SignIn() {
 
       <form action={onSubmit} className="flex flex-col gap-4">
         <Field
-          label="Email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="you@email.com"
+          label="Username"
+          name="username"
+          type="text"
+          autoComplete="username"
+          placeholder="kestrel"
         />
         <div>
           <div className="mb-1.5 flex items-center justify-between">

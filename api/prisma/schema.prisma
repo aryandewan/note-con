@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  HOST
+  PLAYER
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  username String @unique
+  password String
+
+  createdAt DateTime @default(now())
+
+  sessions  Session[]
+  members Member[]
+  @@unique([id, username])
+}
+
+model Member {
+  id String @id @default(uuid())
+  userId String
+  sessionId String
+  role Role @default(PLAYER)
+  joinedAt DateTime @default(now())
+
+  @@unique([userId, sessionId ])
+  @@index([sessionId])
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id String @id @default(uuid())
+  userId String
+  game String
+  slots Int
+  createdBy String 
+  createdAt DateTime @default(now()) 
+  
+  members Member[]
+
+  user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
+}
