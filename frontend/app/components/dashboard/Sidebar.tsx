@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import {
   Calendar,
   Controller,
@@ -10,32 +10,34 @@ import {
   Users,
 } from "~/components/ui/icons";
 
-type NavItem = { label: string; icon: typeof Grid; href: string; current?: boolean };
+type NavItem = { label: string; icon: typeof Grid; href: string; end?: boolean };
 
 const NAV: NavItem[] = [
-  { label: "Lobby", icon: Grid, href: "/dashboard", current: true },
-  { label: "My Squads", icon: Users, href: "/dashboard" },
-  { label: "Schedule", icon: Calendar, href: "/dashboard" },
-  { label: "Games", icon: Controller, href: "/dashboard" },
-  { label: "Settings", icon: Gear, href: "/dashboard" },
+  { label: "Lobby", icon: Grid, href: "/dashboard", end: true },
+  { label: "My Squads", icon: Users, href: "/dashboard/squads" },
+  { label: "Schedule", icon: Calendar, href: "/dashboard/schedule" },
+  { label: "Games", icon: Controller, href: "/dashboard/games" },
+  { label: "Settings", icon: Gear, href: "/dashboard/settings" },
 ];
 
-function NavLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
+function SidebarLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const Icon = item.icon;
   return (
-    <Link
+    <NavLink
       to={item.href}
+      end={item.end}
       onClick={onNavigate}
-      aria-current={item.current ? "page" : undefined}
-      className={`flex items-center gap-3 rounded-pebble px-3 py-2.5 font-display text-[0.95rem] font-bold transition-colors ${
-        item.current
-          ? "bg-primary-tint text-primary-ink"
-          : "text-muted hover:bg-surface-2 hover:text-ink"
-      }`}
+      className={({ isActive }) =>
+        `flex items-center gap-3 rounded-pebble px-3 py-2.5 font-display text-[0.95rem] font-bold transition-colors ${
+          isActive
+            ? "bg-primary-tint text-primary-ink"
+            : "text-muted hover:bg-surface-2 hover:text-ink"
+        }`
+      }
     >
       <Icon size={20} />
       {item.label}
-    </Link>
+    </NavLink>
   );
 }
 
@@ -68,7 +70,7 @@ export function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
 
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">
         {NAV.map((item) => (
-          <NavLink key={item.label} item={item} onNavigate={onNavigate} />
+          <SidebarLink key={item.label} item={item} onNavigate={onNavigate} />
         ))}
       </nav>
 

@@ -3,7 +3,6 @@ import { Container } from "~/components/ui/Container";
 import { Meter } from "~/components/ui/Meter";
 import { Dot, Pill } from "~/components/ui/Pill";
 import { Reveal } from "~/components/ui/Reveal";
-import { Controller, Plus } from "~/components/ui/icons";
 
 const VISUAL =
   "mt-5 flex min-h-34 flex-col justify-center gap-2.5 rounded-card border border-line bg-surface p-4";
@@ -36,8 +35,8 @@ export function HowItWorks() {
     <section id="how" className="scroll-mt-20 py-[clamp(4rem,9vw,7.5rem)]">
       <Container>
         <Reveal className="mb-8 max-w-[40ch] md:mb-12">
-          <span className="inline-flex items-center gap-2 font-display text-[0.9rem] font-bold text-primary-ink">
-            <Controller size={18} /> How Rally works
+          <span className="font-display text-[0.9rem] font-bold text-primary-ink">
+            How Rally works
           </span>
           <h2 className="mt-2.5 text-[clamp(2rem,4.5vw,3.25rem)] font-extrabold">
             From “anyone online?” to a full squad in three steps.
@@ -82,8 +81,8 @@ export function HowItWorks() {
                   <Avatar name="Kestrel" size="sm" />
                   <Avatar name="Nova R" size="sm" />
                   <Avatar name="Bex" size="sm" />
-                  <span className="grid size-7 place-items-center rounded-full border-2 border-dashed border-live-strong bg-live-tint text-live-ink">
-                    <Plus size={12} />
+                  <span className="grid size-7 place-items-center rounded-full border-2 border-dashed border-primary-tint2 bg-primary-tint font-display text-sm font-bold leading-none text-primary-ink">
+                    +
                   </span>
                 </span>
                 <span className="ml-auto font-display text-[0.95rem] font-extrabold tabular-nums">
@@ -95,7 +94,7 @@ export function HowItWorks() {
           </Reveal>
 
           <Reveal delay={0.21} className="relative pt-2">
-            <Num className="bg-live text-onlive">03</Num>
+            <Num className="bg-primary-tint2 text-primary-ink">03</Num>
             <h3 className="mt-5 font-display text-[1.4rem] font-extrabold">Squad’s full — you play</h3>
             <p className="mt-2.5 text-[1.02rem] text-muted">
               Everyone gets a ping and drops into voice the moment the last slot fills. Lobby code’s
@@ -103,10 +102,10 @@ export function HowItWorks() {
             </p>
             <div className={VISUAL}>
               <div className="flex items-center gap-2.5">
-                <Pill variant="live">
+                <Pill variant="solid">
                   <Dot /> READY
                 </Pill>
-                <span className="rounded-md bg-ink px-3.5 py-2 font-display font-extrabold tracking-widest text-live">
+                <span className="rounded-md bg-ink px-3.5 py-2 font-display font-extrabold tracking-widest text-cloud">
                   RALLY-7F2
                 </span>
               </div>

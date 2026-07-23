@@ -7,6 +7,7 @@ const router = express.Router()
 router.use(authMiddleware)
 
 const GAME_MAX_SLOTS = {
+  "Valorant": 5,
   "VALORANT": 5,
   "Apex Legends": 3,
   "Helldivers 2": 4,
@@ -33,6 +34,14 @@ router.post('/', async (req, res) => {
                     slots: n,
                     userId: req.user.id,
                     createdBy: req.user.username
+                }
+            })
+            await tx.notification.create({
+                data: {
+                    userId: req.user.id,
+                    type: "SQUAD_CREATED",
+                    sessionId: created.id,
+
                 }
             })
             await tx.member.create({
@@ -127,21 +136,39 @@ router.put('/join', async (req, res) => {
         }
 
         // 2. Count how many members are already in it
-        const memberCount = await prisma.member.count({
-            where: { sessionId }
+        const members = await prisma.member.findMany({
+            where: { sessionId },
+            select: {userId: true}
         })
 
-        if (memberCount >= session.slots) {
+        if (members.length >= session.slots) {
             return res.status(409).send("Session is full")
         }
 
         // 3. Add the current user as a member (role defaults to PLAYER)
-        await prisma.member.create({
-            data: {
+        await prisma.$transaction(async(tx) => {
+            await tx.member.create({
+              data: {
                 sessionId,
-                userId: req.user.id
-            }
+                userId: req.user.id,
+              },
+            });
+            await tx.notification.create({
+                data: {
+                    userId: req.user.id,
+                    type: "SQUAD_JOINED",
+                    sessionId: sessionId
+                }
+            })
+            await tx.notification.createMany({
+                data: members.map((m) => ({
+                    userId: m.userId,
+                    type: "MEMBER_JOINED",
+                    sessionId
+                }))
+            })
         })
+        
 
         // 4. Return the session with its updated member list
         const updated = await prisma.session.findUnique({

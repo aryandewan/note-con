@@ -1,6 +1,5 @@
 import { animate, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Check } from "~/components/ui/icons";
 import { TICKER } from "~/data/ticker";
 
 export function Ticker() {
@@ -30,7 +29,7 @@ export function Ticker() {
       <div ref={trackRef} className="flex w-max gap-10 py-3.5">
         {[...TICKER, ...TICKER].map((t, i) => (
           <span key={i} className="inline-flex items-center gap-2 whitespace-nowrap text-[0.92rem] text-muted">
-            <Check size={16} className="shrink-0 text-live-ink" />
+            <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-primary" />
             <span>
               <span className="font-semibold text-ink">{t.name}</span> {t.what} just went full
             </span>

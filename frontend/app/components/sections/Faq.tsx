@@ -2,7 +2,6 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import { Container } from "~/components/ui/Container";
 import { Reveal } from "~/components/ui/Reveal";
-import { Plus } from "~/components/ui/icons";
 import { FAQS, type Faq as FaqType } from "~/data/faqs";
 import { easeExpo } from "~/lib/motion";
 
@@ -21,11 +20,11 @@ function FaqItem({ item, defaultOpen }: { item: FaqType; defaultOpen?: boolean }
       >
         {item.q}
         <span
-          className={`grid size-[1.6rem] shrink-0 place-items-center rounded-full transition-[transform,background-color] duration-300 ${
+          className={`grid size-[1.6rem] shrink-0 place-items-center rounded-full font-display text-base leading-none font-bold transition-[transform,background-color] duration-300 ${
             open ? "rotate-45 bg-primary text-cloud" : "bg-surface-2 text-primary-ink"
           }`}
         >
-          <Plus size={16} />
+          +
         </span>
       </button>
       <AnimatePresence initial={false}>

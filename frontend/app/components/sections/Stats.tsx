@@ -23,7 +23,7 @@ export function Stats() {
         </Reveal>
         <Reveal delay={0.08} className={STAT}>
           <div className={NUM}>
-            4<span className="text-live">:</span>
+            4<span className="opacity-70">:</span>
             <CountUp value={12} />
           </div>
           <div className={LABEL}>average minutes to a full squad</div>
@@ -31,7 +31,7 @@ export function Stats() {
         <Reveal delay={0.16} className={STAT}>
           <div className={NUM}>
             <CountUp value={80} />
-            <span className="text-live">+</span>
+            <span className="opacity-70">+</span>
           </div>
           <div className={LABEL}>games with live squads tonight</div>
         </Reveal>

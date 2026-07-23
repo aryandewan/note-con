@@ -22,7 +22,7 @@ export function TopBar({ onMenu, onHost }: { onMenu: () => void; onHost: () => v
         />
       </label>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <button
           type="button"
           aria-label="Notifications"
@@ -34,7 +34,7 @@ export function TopBar({ onMenu, onHost }: { onMenu: () => void; onHost: () => v
         <button
           type="button"
           onClick={onHost}
-          className="hidden items-center gap-1.5 rounded-full bg-primary px-4 py-2 font-display text-[0.92rem] font-bold text-cloud shadow-card transition-colors hover:bg-primary-hover sm:inline-flex"
+          className="hidden cursor-pointer items-center gap-1.5 rounded-full bg-primary px-4 py-2 font-display text-[0.92rem] font-bold text-cloud shadow-card transition-colors hover:bg-primary-hover sm:inline-flex"
         >
           <Bolt size={16} /> Host
         </button>

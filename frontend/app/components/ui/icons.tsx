@@ -120,7 +120,7 @@ export function Logo({ className }: { className?: string }) {
     >
       <rect width="36" height="36" rx="10" fill="var(--color-primary)" />
       <circle cx="13" cy="14" r="3.4" fill="var(--color-cloud)" />
-      <circle cx="23" cy="14" r="3.4" fill="var(--color-live)" />
+      <circle cx="23" cy="14" r="3.4" fill="var(--color-cloud)" />
       <path
         d="M9 25c1.6-3 4.6-4.6 9-4.6s7.4 1.6 9 4.6"
         stroke="var(--color-cloud)"

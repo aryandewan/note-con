@@ -1,7 +1,6 @@
 import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Reveal } from "~/components/ui/Reveal";
-import { Clock } from "~/components/ui/icons";
 import { SCHEDULE_DAYS, SCHEDULE_ROWS } from "~/data/schedule";
 
 export function Schedule() {
@@ -9,8 +8,8 @@ export function Schedule() {
     <section id="schedule" className="scroll-mt-20 py-[clamp(4rem,9vw,7.5rem)]">
       <Container className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-[clamp(2rem,5vw,4rem)]">
         <Reveal className="max-w-[40ch]">
-          <span className="inline-flex items-center gap-2 font-display text-[0.9rem] font-bold text-primary-ink">
-            <Clock size={18} /> Plan ahead
+          <span className="font-display text-[0.9rem] font-bold text-primary-ink">
+            Plan ahead
           </span>
           <h2 className="mt-2.5 text-[clamp(2rem,4.5vw,3.25rem)] font-extrabold">
             Can’t play right now? Lock in a session for later.
@@ -20,9 +19,7 @@ export function Schedule() {
             Everyone gets a reminder before go-time — no one’s left staring at an empty lobby.
           </p>
           <div className="mt-7">
-            <Button href="/signup">
-              <Clock size={18} /> Schedule a session
-            </Button>
+            <Button href="/signup">Schedule a session</Button>
           </div>
         </Reveal>
 

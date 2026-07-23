@@ -1,5 +1,5 @@
 import { Container } from "~/components/ui/Container";
-import { Bolt, Controller, Logo, Users } from "~/components/ui/icons";
+import { Logo } from "~/components/ui/icons";
 
 const COLS: { title: string; links: string[] }[] = [
   { title: "Product", links: ["Open squads", "How it works", "Schedule", "Rally Plus", "Download app"] },
@@ -39,18 +39,14 @@ export function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-6 border-t border-line pt-7 text-[0.9rem] text-muted">
           <span>© {new Date().getFullYear()} Rally Labs · Privacy · Terms</span>
           <div className="flex gap-2.5">
-            {[
-              { icon: Controller, label: "Rally on Discord" },
-              { icon: Bolt, label: "Rally on X" },
-              { icon: Users, label: "Rally on Twitch" },
-            ].map(({ icon: Icon, label }) => (
+            {["Discord", "X", "Twitch"].map((label) => (
               <a
                 key={label}
                 href="#"
-                aria-label={label}
-                className="grid size-9 place-items-center rounded-full border border-line text-muted transition-[color,border-color,transform] hover:-translate-y-0.5 hover:border-primary hover:text-primary"
+                aria-label={`Rally on ${label}`}
+                className="rounded-full border border-line px-3.5 py-1.5 font-display text-[0.85rem] font-bold text-muted transition-colors hover:border-primary hover:text-primary"
               >
-                <Icon size={18} />
+                {label}
               </a>
             ))}
           </div>

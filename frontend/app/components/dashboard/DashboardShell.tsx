@@ -6,8 +6,8 @@ import { TopBar } from "~/components/dashboard/TopBar";
 import { Close } from "~/components/ui/icons";
 import { easeExpo } from "~/lib/motion";
 
-/** Lets anything rendered inside DashboardShell open the "Host a session" modal. */
-const HostSessionContext = createContext<() => void>(() => {});
+/** Lets anything rendered inside DashboardShell open the "Host a session" modal, optionally preselecting a game. */
+const HostSessionContext = createContext<(game?: string) => void>(() => {});
 export function useHostSession() {
   return useContext(HostSessionContext);
 }
@@ -15,9 +15,14 @@ export function useHostSession() {
 export function DashboardShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [hostOpen, setHostOpen] = useState(false);
+  const [hostGame, setHostGame] = useState<string | undefined>();
   const reduce = useReducedMotion();
   const close = () => setOpen(false);
-  const openHost = () => setHostOpen(true);
+  const openHost = (game?: string) => {
+    // Guard against being used directly as an event handler.
+    setHostGame(typeof game === "string" ? game : undefined);
+    setHostOpen(true);
+  };
 
   return (
     <div className="min-h-svh bg-bg">
@@ -63,13 +68,17 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       {/* Content */}
       <div className="lg:pl-60">
-        <TopBar onMenu={() => setOpen(true)} onHost={openHost} />
+        <TopBar onMenu={() => setOpen(true)} onHost={() => openHost()} />
         <main>
           <HostSessionContext.Provider value={openHost}>{children}</HostSessionContext.Provider>
         </main>
       </div>
 
-      <HostSessionModal open={hostOpen} onClose={() => setHostOpen(false)} />
+      <HostSessionModal
+        open={hostOpen}
+        initialGame={hostGame}
+        onClose={() => setHostOpen(false)}
+      />
     </div>
   );
 }

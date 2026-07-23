@@ -1,4 +1,3 @@
-import { motion, useReducedMotion } from "motion/react";
 import { Link, useNavigate } from "react-router";
 import { AuthLayout, Divider, Field, SocialRow } from "~/components/auth/AuthLayout";
 import type { Route } from "./+types/signup";
@@ -12,7 +11,6 @@ export function meta(_: Route.MetaArgs) {
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const reduce = useReducedMotion();
 
   async function onSubmit(formData: FormData) {
     try {
@@ -75,14 +73,12 @@ export default function SignUp() {
           autoComplete="new-password"
           placeholder="At least 8 characters"
         />
-        <motion.button
+        <button
           type="submit"
-          whileTap={reduce ? undefined : { scale: 0.98 }}
-          whileHover={reduce ? undefined : { y: -1 }}
-          className="mt-1 w-full rounded-full bg-primary px-6 py-[0.95rem] font-display text-[1.05rem] font-bold text-cloud shadow-card transition-colors duration-200 hover:bg-primary-hover hover:shadow-pop"
+          className="w-full cursor-pointer rounded-full bg-primary px-6 py-[0.95rem] font-display text-[1.05rem] font-bold text-cloud shadow-card transition-colors duration-200 hover:bg-primary-hover hover:shadow-pop"
         >
           Create account
-        </motion.button>
+        </button>
       </form>
 
       <p className="mt-5 text-center text-[0.85rem] leading-relaxed text-muted">

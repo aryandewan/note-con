@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Rally design tokens — bright social arena (azure + lime + coral)
+   Rally design tokens.
    Exposed to Tailwind as utilities: bg-bg, text-ink, bg-primary,
    font-display, rounded-panel, shadow-float, ease-out-expo, etc.
+
+   Marketing/public surfaces (home, header, footer, sign-in/up) use
+   ONLY the neutral + brand (azure) tokens below — restrained
+   "Gaming SaaS" palette, no lime/coral/per-game accents, no icons.
+   The lime "live", coral "hot", and per-game accent tokens remain
+   for the authenticated dashboard's real-time squad status — a
+   deliberately different, separate register. See DESIGN.md.
    ───────────────────────────────────────────────────────────── */
 @theme {
   /* Surfaces & ink */

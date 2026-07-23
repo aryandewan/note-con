@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { Avatar } from "~/components/ui/Avatar";
 import { Meter } from "~/components/ui/Meter";
 import { Dot, Pill } from "~/components/ui/Pill";
-import { Logo, Plus } from "~/components/ui/icons";
+import { Logo } from "~/components/ui/icons";
 
 const TRUST = ["Nova R", "Tariq", "Mei L", "Loon", "Echo"];
 
@@ -23,7 +23,7 @@ function BrandPanel() {
         aria-label="Rally home"
         className="relative inline-flex items-center gap-2.5 font-display text-2xl font-black tracking-[-0.03em]"
       >
-        <Logo className="size-[1.9rem]" />
+        <Logo className="size-[1.9rem] border rounded-lg" />
         Rally
       </Link>
 
@@ -42,12 +42,9 @@ function BrandPanel() {
           className="mt-9 max-w-[20rem] rounded-card border border-white/15 bg-white/10 p-4 shadow-float backdrop-blur-md"
         >
           <div className="mb-3 flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 font-display text-[0.98rem] font-extrabold">
-              <span className="size-2.5 rounded-full bg-g-valorant" />
-              Valorant
-            </span>
+            <span className="font-display text-[0.98rem] font-extrabold">Valorant</span>
             <span className="ml-auto">
-              <Pill variant="live">
+              <Pill variant="solid">
                 <Dot pulse /> LIVE
               </Pill>
             </span>
@@ -57,8 +54,8 @@ function BrandPanel() {
               {["vyn", "Tariq", "Mei L", "Sol"].map((m) => (
                 <Avatar key={m} name={m} size="sm" />
               ))}
-              <span className="grid size-7 place-items-center rounded-full border-2 border-dashed border-live-strong bg-live-tint text-live-ink">
-                <Plus size={12} />
+              <span className="grid size-7 place-items-center rounded-full border-2 border-dashed border-primary-tint2 bg-primary-tint font-display text-xs font-bold leading-none text-primary-ink">
+                +
               </span>
             </span>
             <span className="ml-auto font-display text-[0.95rem] font-extrabold tabular-nums">

@@ -16,6 +16,12 @@ enum Role {
   PLAYER
 }
 
+enum Type {
+  SQUAD_CREATED
+  SQUAD_JOINED
+  MEMBER_JOINED
+}
+
 model User {
   id String @id @default(uuid())
   email String @unique
@@ -26,6 +32,7 @@ model User {
 
   sessions  Session[]
   members Member[]
+  notifications Notification[]
   @@unique([id, username])
 }
 
@@ -52,6 +59,21 @@ model Session {
   createdAt DateTime @default(now()) 
   
   members Member[]
+  notifications Notification[]
 
   user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
+}
+
+model Notification {
+  id String @id @default(uuid())
+  userId String
+  type Type
+  sessionId String
+  createdAt DateTime @default(now())
+  readAt DateTime?
+
+  @@index([userId, readAt])
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }

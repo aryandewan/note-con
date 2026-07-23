@@ -2,14 +2,14 @@ import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { MotionLink } from "~/components/ui/MotionLink";
 
-type Variant = "primary" | "ghost" | "ghost-light" | "lime";
+type Variant = "primary" | "ghost" | "ghost-light" | "inverse";
 type Size = "md" | "lg";
 
 const VARIANTS: Record<Variant, string> = {
   primary: "bg-primary text-cloud shadow-card hover:bg-primary-hover hover:shadow-pop",
   ghost: "border-[1.5px] border-line-strong text-ink hover:border-ink hover:bg-surface",
   "ghost-light": "border-[1.5px] border-white/30 text-cloud hover:border-white/70 hover:bg-white/10",
-  lime: "bg-live text-onlive shadow-[0_4px_14px_oklch(0.78_0.19_130/0.4)] hover:bg-live-strong",
+  inverse: "bg-cloud text-ink shadow-card hover:bg-primary-tint",
 };
 const SIZES: Record<Size, string> = {
   md: "text-base px-6 py-[0.95rem]",

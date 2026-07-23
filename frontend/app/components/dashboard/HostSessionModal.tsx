@@ -20,7 +20,15 @@ const MIN_SLOTS = 2;
 const chipClass =
   "flex items-center gap-2 rounded-pebble border border-line-strong bg-bg px-3 py-2.5 font-display text-[0.9rem] font-bold text-ink transition-colors hover:border-ink peer-checked:border-primary peer-checked:bg-primary-tint peer-checked:text-black peer-focus-visible:ring-4 peer-focus-visible:ring-primary-tint2";
 
-export function HostSessionModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function HostSessionModal({
+  open,
+  initialGame,
+  onClose,
+}: {
+  open: boolean;
+  initialGame?: string;
+  onClose: () => void;
+}) {
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const [game, setGame] = useState(GAMES[0].name);
@@ -44,6 +52,9 @@ export function HostSessionModal({ open, onClose }: { open: boolean; onClose: ()
   useEffect(() => {
     if (!open) return;
     setError(null);
+    if (initialGame && GAMES.some((g) => g.name === initialGame)) {
+      setGame(initialGame);
+    }
     const prevFocus = document.activeElement as HTMLElement | null;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -73,7 +84,7 @@ export function HostSessionModal({ open, onClose }: { open: boolean; onClose: ()
       document.body.style.overflow = prevOverflow;
       prevFocus?.focus();
     };
-  }, [open, onClose]);
+  }, [open, initialGame, onClose]);
 
   const onSubmit = async () => {
     setError(null);

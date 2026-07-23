@@ -5,15 +5,14 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Dot } from "~/components/ui/Pill";
 import { Reveal } from "~/components/ui/Reveal";
-import { Bolt, Check, Plus } from "~/components/ui/icons";
 import { easeExpo } from "~/lib/motion";
 
 /** Squads cycled through the live-fill chip — kept to a handful, swapped for real data later. */
 const FILLS = [
-  { game: "Valorant", accent: "var(--color-g-valorant)", squad: ["vyn", "Tariq", "Mei L", "Sol"], joining: "Ash" },
-  { game: "Marvel Rivals", accent: "var(--color-g-rivals)", squad: ["PixelMoth", "Dee", "Rhe", "Juno"], joining: "Koi" },
-  { game: "Apex Legends", accent: "var(--color-g-apex)", squad: ["Loon", "Bex", "Wren", "Ty"], joining: "Pax" },
-  { game: "Helldivers 2", accent: "var(--color-g-helldivers)", squad: ["Kestrel", "Nova R", "Mol", "Frost"], joining: "Zia" },
+  { game: "Valorant", squad: ["vyn", "Tariq", "Mei L", "Sol"], joining: "Ash" },
+  { game: "Marvel Rivals", squad: ["PixelMoth", "Dee", "Rhe", "Juno"], joining: "Koi" },
+  { game: "Apex Legends", squad: ["Loon", "Bex", "Wren", "Ty"], joining: "Pax" },
+  { game: "Helldivers 2", squad: ["Kestrel", "Nova R", "Mol", "Frost"], joining: "Zia" },
 ];
 
 /**
@@ -54,7 +53,7 @@ function LiveFill() {
           <motion.span
             key={i}
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-live"
+            className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-primary"
             initial={{ opacity: 0.55, scale: 1 }}
             animate={{ opacity: 0, scale: 1.14 }}
             transition={{ duration: 0.75, ease: easeExpo }}
@@ -62,14 +61,11 @@ function LiveFill() {
         )}
       </AnimatePresence>
 
-      <span className="flex items-center text-live">
+      <span className="flex items-center text-primary">
         <Dot pulse />
       </span>
 
-      <span className="flex items-center gap-1.5 font-display text-[0.9rem] font-extrabold text-cloud">
-        <span className="size-2 rounded-full" style={{ background: cur.accent }} />
-        {cur.game}
-      </span>
+      <span className="font-display text-[0.9rem] font-extrabold text-cloud">{cur.game}</span>
 
       <span className="flex -space-x-2">
         {cur.squad.map((m) => (
@@ -89,9 +85,9 @@ function LiveFill() {
             aria-hidden="true"
             animate={reduce ? undefined : { scale: [1, 1.12, 1] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="grid size-7 place-items-center rounded-full border-2 border-dashed border-live-strong bg-live-tint text-live-ink"
+            className="grid size-7 place-items-center rounded-full border-2 border-dashed border-primary-tint2 bg-primary-tint font-display text-xs font-bold leading-none text-primary-ink"
           >
-            <Plus size={12} />
+            +
           </motion.span>
         )}
       </span>
@@ -102,57 +98,25 @@ function LiveFill() {
           initial={reduce ? false : { y: -7, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, ease: easeExpo }}
-          className={`inline-block ${filled ? "text-live" : ""}`}
+          className="inline-block"
         >
           {count}
         </motion.span>
         <span className="text-cloud/55">/{size}</span>
-      </span>
-
-      <span className="grid w-4 place-items-center text-live">
-        <AnimatePresence>
-          {filled && (
-            <motion.span
-              key="chk"
-              initial={reduce ? false : { scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: easeExpo }}
-            >
-              <Check size={15} />
-            </motion.span>
-          )}
-        </AnimatePresence>
       </span>
     </div>
   );
 }
 
 export function Cta() {
-  const reduce = useReducedMotion();
-  const breathe = (dur: number, range: number) =>
-    reduce
-      ? undefined
-      : {
-          scale: [1, 1.08, 1],
-          opacity: [range, range + 0.12, range],
-          transition: { duration: dur, repeat: Infinity, ease: "easeInOut" as const },
-        };
-
   return (
     <section className="py-[clamp(4rem,9vw,7.5rem)] text-center">
       <Container>
         <Reveal>
           <div className="relative isolate overflow-hidden rounded-panel bg-ink px-[clamp(1.5rem,5vw,4rem)] py-[clamp(2.75rem,6vw,5rem)]">
-            <motion.span
+            <span
               aria-hidden="true"
-              animate={breathe(13, 0.9)}
-              className="pointer-events-none absolute -right-24 -top-56 size-[34rem] rounded-full bg-[radial-gradient(circle,oklch(0.52_0.155_224/0.5),transparent_70%)] blur-[60px]"
-            />
-            <motion.span
-              aria-hidden="true"
-              animate={breathe(16, 0.7)}
-              className="pointer-events-none absolute -bottom-48 -left-24 size-[26rem] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.19_130/0.4),transparent_70%)] blur-[60px]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(oklch(1_0_0/0.06)_1px,transparent_1px)] bg-[length:24px_24px]"
             />
 
             <div className="relative">
@@ -164,8 +128,8 @@ export function Cta() {
                 Jump into a live lobby or open your own. It’s free, and it’s fast.
               </p>
               <div className="mt-9 flex flex-col justify-center gap-3.5 sm:flex-row">
-                <Button href="/signup" variant="lime" size="lg">
-                  <Bolt size={18} /> Browse open squads
+                <Button href="/signup" variant="inverse" size="lg">
+                  Browse open squads
                 </Button>
                 <Button href="/signup" variant="ghost-light" size="lg">
                   Start a squad

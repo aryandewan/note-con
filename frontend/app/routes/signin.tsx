@@ -1,4 +1,3 @@
-import { motion, useReducedMotion } from "motion/react";
 import { Link, useNavigate } from "react-router";
 import { AuthLayout, Divider, Field, SocialRow } from "../components/auth/AuthLayout";
 import type { Route } from "./+types/signin";
@@ -12,7 +11,6 @@ export function meta(_: Route.MetaArgs) {
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const reduce = useReducedMotion();
 
   const onSubmit = async(formData: FormData) => {
       try {
@@ -85,14 +83,12 @@ export default function SignIn() {
             className="w-full rounded-pebble border border-line-strong bg-bg px-4 py-3 text-[1rem] text-ink placeholder:text-muted/70 transition-[border-color,box-shadow] duration-200 focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary-tint2"
           />
         </div>
-        <motion.button
+        <button
           type="submit"
-          whileTap={reduce ? undefined : { scale: 0.98 }}
-          whileHover={reduce ? undefined : { y: -1 }}
-          className="mt-1 w-full rounded-full bg-primary px-6 py-[0.95rem] font-display text-[1.05rem] font-bold text-cloud shadow-card transition-colors duration-200 hover:bg-primary-hover hover:shadow-pop"
+          className="w-full cursor-pointer rounded-full bg-primary px-6 py-[0.95rem] font-display text-[1.05rem] font-bold text-cloud shadow-card transition-colors duration-200 hover:bg-primary-hover"
         >
           Log in
-        </motion.button>
+        </button>
       </form>
     </AuthLayout>
   );

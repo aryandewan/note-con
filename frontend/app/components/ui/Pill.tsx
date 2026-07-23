@@ -1,13 +1,12 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-type PillVariant = "live" | "open" | "hot" | "full";
+type PillVariant = "solid" | "outline" | "muted";
 
 const PILLS: Record<PillVariant, string> = {
-  live: "bg-live text-onlive",
-  open: "bg-primary-tint text-primary-ink",
-  hot: "bg-hot text-cloud",
-  full: "bg-surface-2 text-muted",
+  solid: "bg-primary text-cloud",
+  outline: "border border-line-strong bg-bg text-ink",
+  muted: "bg-surface-2 text-muted",
 };
 
 export function Pill({

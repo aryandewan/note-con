@@ -3,7 +3,6 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { MotionLink } from "~/components/ui/MotionLink";
 import { Reveal } from "~/components/ui/Reveal";
-import { Arrow } from "~/components/ui/icons";
 import { GAMES } from "~/data/games";
 
 export function Games() {
@@ -19,7 +18,7 @@ export function Games() {
           </Reveal>
           <Reveal delay={0.05}>
             <Button href="/signup" variant="ghost">
-              Browse all games <Arrow size={16} />
+              Browse all games →
             </Button>
           </Reveal>
         </div>
@@ -49,7 +48,7 @@ export function Games() {
                 )}
               </MotionLink>
               <span className="inline-flex items-center gap-1.5 px-1 text-[0.85rem] font-semibold text-muted">
-                <span className="size-2 rounded-full bg-live-strong" />
+                <span className="size-2 rounded-full bg-primary" />
                 <b className="font-display text-ink tabular-nums">{g.live}</b> squads live
               </span>
             </Reveal>
