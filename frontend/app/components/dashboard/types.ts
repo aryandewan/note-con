@@ -7,3 +7,12 @@ export type Squad = {
   /** How many slots are currently taken (members in the session). */
   filled: number;
 };
+
+
+export type Notification = {
+  id: string,
+  type: "SQUAD_CREATED" | "SQUAD_JOINED" | "MEMBER_JOINED",
+  readAt: string | null,
+  createdAt: string,
+  session: { id: string; game: string}
+}

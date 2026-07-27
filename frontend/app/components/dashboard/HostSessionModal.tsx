@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Bolt, Close } from "~/components/ui/icons";
 import { GAMES } from "~/data/games";
 import { easeExpo } from "~/lib/motion";
+import { useNotificationsStore } from "~/stores/notifications";
 import { useSquadsStore } from "~/stores/squads";
 
 /** Per-game accent dot, mapped to the tokens in app.css. */
@@ -36,6 +37,7 @@ export function HostSessionModal({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fetchMine = useSquadsStore((s) => s.fetchMine);
+  const loadNotifications = useNotificationsStore((s) => s.fetch);
 
   // Slot choices depend on the selected game's real party size.
   const selectedGame = GAMES.find((g) => g.name === game) ?? GAMES[0];
@@ -106,6 +108,7 @@ export function HostSessionModal({
       if (res.ok) {
         // New squad exists — refresh "Your squads" so it shows up immediately.
         await fetchMine();
+        loadNotifications();
         onClose();
         return;
       }

@@ -1,4 +1,5 @@
-import { Bell, Bolt, Menu, Search } from "~/components/ui/icons";
+import { Bolt, Menu, Search } from "~/components/ui/icons";
+import { NotificationsBell } from "./NotificationsBell";
 
 /** Sticky top bar: mobile menu toggle, search, notifications, host shortcut. */
 export function TopBar({ onMenu, onHost }: { onMenu: () => void; onHost: () => void }) {
@@ -14,7 +15,10 @@ export function TopBar({ onMenu, onHost }: { onMenu: () => void; onHost: () => v
       </button>
 
       <label className="relative flex max-w-md flex-1 items-center">
-        <Search size={18} className="pointer-events-none absolute left-3 text-muted" />
+        <Search
+          size={18}
+          className="pointer-events-none absolute left-3 text-muted"
+        />
         <input
           type="search"
           placeholder="Search squads, games, players"
@@ -23,14 +27,7 @@ export function TopBar({ onMenu, onHost }: { onMenu: () => void; onHost: () => v
       </label>
 
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          aria-label="Notifications"
-          className="relative grid size-9 place-items-center rounded-pebble text-ink transition-colors hover:bg-surface-2"
-        >
-          <Bell size={20} />
-          <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-hot ring-2 ring-bg" />
-        </button>
+        <NotificationsBell />
         <button
           type="button"
           onClick={onHost}

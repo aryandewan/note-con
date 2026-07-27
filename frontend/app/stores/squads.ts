@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Squad } from "~/components/dashboard/types";
+import { useNotificationsStore } from "./notifications";
 
 const token = () => localStorage.getItem("token");
 const authHeaders = (t: string) => ({ Authorization: `Bearer ${t}` });
@@ -80,6 +81,9 @@ export const useSquadsStore = create<SquadsState>((set) => ({
         mySquads: [...state.mySquads.filter((s) => s.id !== joined.id), joined],
         joiningId: null,
       }));
+      // The server just wrote a "you joined" notification — pick it up now
+      // instead of waiting for the bell's next poll.
+      useNotificationsStore.getState().fetch();
     } catch {
       set({ error: "Could not join that squad. Try again.", joiningId: null });
     }

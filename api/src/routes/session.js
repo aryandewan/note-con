@@ -85,6 +85,7 @@ router.get('/', async (req, res) => {
                     userId: req.user.id
                 }
             } },
+            orderBy: {createdAt: "desc"},
             select: { id: true, game: true, slots: true, createdBy: true, members: true }
         })
         res.json(sessions)
@@ -102,6 +103,7 @@ router.get('/browse', async (req, res) => {
                     none: {userId: req.user.id}
                 }
             },
+            orderBy: {createdAt: "desc"},
             select: {
                 id: true,
                 game: true,
@@ -135,18 +137,17 @@ router.put('/join', async (req, res) => {
             return res.status(404).send("Session not found")
         }
 
-        // 2. Count how many members are already in it
-        const members = await prisma.member.findMany({
-            where: { sessionId },
-            select: {userId: true}
-        })
-
-        if (members.length >= session.slots) {
-            return res.status(409).send("Session is full")
-        }
-
         // 3. Add the current user as a member (role defaults to PLAYER)
         await prisma.$transaction(async(tx) => {
+            const members = await tx.member.findMany({
+              where: { sessionId },
+              select: { userId: true },
+            });
+
+            if (members.length >= session.slots) {
+                throw new Error("SESSION_FULL")
+            }
+
             await tx.member.create({
               data: {
                 sessionId,
@@ -192,6 +193,9 @@ router.put('/join', async (req, res) => {
 
         res.json(updated)
     } catch (err) {
+        if(err.message === "SESSION_FULL") {
+            return res.status(409).send("Session is full")
+        }
         // Already a member -> unique constraint (userId + sessionId) fails
         if (err.code === 'P2002') {
             return res.status(409).send("You have already joined this session")
