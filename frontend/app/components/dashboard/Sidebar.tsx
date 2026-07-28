@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
+import { api } from "~/lib/api";
 import {
   Calendar,
   Controller,
@@ -49,7 +50,7 @@ export function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    fetch("/api/auth/info", {
+    fetch(api("/api/auth/info"), {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => (res.ok ? res.json() : null))

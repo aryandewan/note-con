@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/DashboardHeader";
 import { Panel } from "~/components/dashboard/Panel";
 import type { Route } from "./+types/dashboard.settings";
+import { api } from "~/lib/api";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -33,7 +34,7 @@ export default function Settings() {
       setFailed(true);
       return;
     }
-    fetch("/api/auth/info", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(api("/api/auth/info"), { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => (res.ok ? res.json() : Promise.reject()))
       .then(setUser)
       .catch(() => setFailed(true));

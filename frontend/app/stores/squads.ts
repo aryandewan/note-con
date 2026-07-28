@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { api } from "~/lib/api";
 import type { Squad } from "~/components/dashboard/types";
 import { useNotificationsStore } from "./notifications";
 
@@ -50,7 +51,7 @@ export const useSquadsStore = create<SquadsState>((set) => ({
   fetchMine: async () => {
     const t = token();
     if (!t) return;
-    const res = await fetch("/api/session", { headers: authHeaders(t) });
+    const res = await fetch(api("/api/session"), { headers: authHeaders(t) });
     const data: RawSession[] = res.ok ? await res.json() : [];
     set({ mySquads: data.map(toSquad) });
   },
@@ -58,7 +59,7 @@ export const useSquadsStore = create<SquadsState>((set) => ({
   fetchOpen: async () => {
     const t = token();
     if (!t) return;
-    const res = await fetch("/api/session/browse", { headers: authHeaders(t) });
+    const res = await fetch(api("/api/session/browse"), { headers: authHeaders(t) });
     const data: RawSession[] = res.ok ? await res.json() : [];
     set({ openSquads: data.map(toSquad) });
   },
@@ -68,7 +69,7 @@ export const useSquadsStore = create<SquadsState>((set) => ({
     if (!t) return;
     set({ joiningId: sessionId, error: null });
     try {
-      const res = await fetch("/api/session/join", {
+      const res = await fetch(api("/api/session/join"), {
         method: "PUT",
         headers: { "Content-Type": "application/json", ...authHeaders(t) },
         body: JSON.stringify({ sessionId }),

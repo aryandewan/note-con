@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { api } from "~/lib/api"
 import type { Notification } from "~/components/dashboard/types";
 
 const token = () => localStorage.getItem("token")
@@ -19,7 +20,7 @@ export const useNotificationsStore = create<NotificationState>((set) => ({
         const t = token()
         if(!t) return
 
-        const res = await fetch("/api/notification", { headers: authHeaders(t)})
+        const res = await fetch(api("/api/notification"), { headers: authHeaders(t)})
         if(!res.ok) return
 
         const data = await res.json()
@@ -29,7 +30,7 @@ export const useNotificationsStore = create<NotificationState>((set) => ({
         const t = token()
         if(!t) return
 
-        const res = await fetch("/api/notification", {
+        const res = await fetch(api("/api/notification"), {
             method: "PUT",
             headers: authHeaders(t),
         })

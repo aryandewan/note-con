@@ -8,6 +8,7 @@ import { SquadCard } from "~/components/dashboard/SquadCard";
 import { Bolt, Users } from "~/components/ui/icons";
 import { useSquadsStore } from "~/stores/squads";
 import type { Route } from "./+types/dashboard.squads";
+import { api } from "~/lib/api";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -25,7 +26,7 @@ export default function MySquads() {
     fetchMine();
     const token = localStorage.getItem("token");
     if (!token) return;
-    fetch("/api/auth/info", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(api("/api/auth/info"), { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => (res.ok ? res.json() : null))
       .then((user) => setUsername(user?.username ?? null));
   }, [fetchMine]);

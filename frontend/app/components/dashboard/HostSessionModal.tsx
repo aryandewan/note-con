@@ -5,6 +5,7 @@ import { GAMES } from "~/data/games";
 import { easeExpo } from "~/lib/motion";
 import { useNotificationsStore } from "~/stores/notifications";
 import { useSquadsStore } from "~/stores/squads";
+import { api } from "~/lib/api";
 
 /** Per-game accent dot, mapped to the tokens in app.css. */
 const GAME_ACCENT: Record<string, string> = {
@@ -97,7 +98,7 @@ export function HostSessionModal({
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/session", {
+      const res = await fetch(api("/api/session"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

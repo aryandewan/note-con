@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router";
 import { AuthLayout, Divider, Field, SocialRow } from "../components/auth/AuthLayout";
 import type { Route } from "./+types/signin";
+import { api } from "~/lib/api";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -14,7 +15,7 @@ export default function SignIn() {
 
   const onSubmit = async(formData: FormData) => {
       try {
-         const res = await fetch("/api/auth/login", {
+         const res = await fetch(api("/api/auth/login"), {
            method: "POST",
            headers: {
              "Content-Type": "application/json",
